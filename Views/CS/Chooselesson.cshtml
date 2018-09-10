@@ -1,0 +1,78 @@
+﻿@model jxgl.ViewModel.CSListViewModel
+@using jxgl.ViewModel
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $("#submit").click(
+            function () {
+            var j = 0;
+            var i = 0;
+            var item = new Array(10);
+            for (i = 0; i <@Model.CSs.Count; i++) {
+                if ($("#C" + i).prop("checked")) {
+                   var x = document.getElementById("table").rows[i+1].cells[0]; 
+                    item[j] = x.innerHTML;
+                    j++;
+                }
+            }
+            $("#submit").val("提交中……");
+            $.ajax({
+                type: "post",
+                url: "/CS/DoChooseLesson",
+                datatype:"string",
+                data: {
+                    Cnos: item
+                },
+                success: function (data) {
+                    if (data == "success") {
+                        $("#result").html("选课成功！");
+                        setTimeout(function () {
+                            window.location.reload();
+                        }, 500);
+                        }
+                    else { $("#result").val("选课失败！"); }
+                },
+                complete: function () {
+                    $("#submit").val("确认提交");
+                }
+            })
+        })
+    })
+</script>
+<p>这是选课界面</p>
+<div>
+    <table class="table" name="table" id="table" >
+        <tr>
+            <th>课程号</th>
+            <th>课程名</th>
+            <th>教师号</th>
+            <th>教师名</th>
+            <th>学分</th>
+            <th>学时</th>
+            <th>学期</th>
+            <th>选择</th>
+        </tr>
+        @for(int i=0;i<Model.CSs.Count; i++)
+        {      
+            <tr>
+                <th>@Model.CSs[i].Cno</th>
+                <th>@Model.CSs[i].Cname</th>
+                <th>@Model.CSs[i].Tno</th>
+                <th>@Model.CSs[i].Tname</th>
+                <th>@Model.CSs[i].Ccredit</th>
+                <th>@Model.CSs[i].Ctime</th>
+                <th>@Model.CSs[i].Ctrem</th>
+                <th>@Html.CheckBox("C"+i)</th>
+            </tr>
+        }
+
+    </table>
+    <p>
+        <input type="button" name="submit" id="submit" value="确认提交">
+    </p>
+    <p name="result" id="result" style="color:red"></p>
+</div>

@@ -1,0 +1,30 @@
+﻿@model jxgl.ViewModel.StudentListViewModel
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@Html.AntiForgeryToken()
+@using jxgl.ViewModel
+<table>
+    <tr>
+        <th>学号</th>
+        <th>姓名</th>
+        <th>性别</th>
+        <th>学院</th>
+        <th>课程号</th>
+        <th>课程名</th>
+        <th>分数</th>
+    </tr>
+    @foreach (StudentViewModel student in Model.Students)
+    {
+        <tr>
+            <th>@student.Sno</th>
+            <th>@student.Sname</th>
+            <th>@student.Ssex</th>
+            <th>@student.Sacad</th>
+            <th>@student.Cno</th>
+            <th>@student.Cname</th>
+            <th>@student.Sscore</th>
+        </tr>
+    }
+</table>
+

@@ -1,0 +1,86 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <title>
+        登陆
+    </title>
+    <script src="~/Scripts/jquery-1.10.2.js"></script>
+    <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $("#submit").click(function () {
+                var na = $("#username").val();
+                var pw = $("#password").val();
+                if (na == "" || null) {
+                    $("#tip1").html("用户名为空！")
+                    return;
+                }
+                if (pw == "" || null) {
+                    $("#tip2").html("密码为空！")
+                    return;
+                }
+                document.getElementById("submit").innerText = "登陆中……";
+                $.ajax({
+                    type: 'post',
+                    url: '/Authorize/login',
+                    data: {
+                        ume: na, pwd: pw
+                    },
+                    success: function (data) {
+                        if (data == "Student") {
+                            window.location.href = "/Home/StudentIndex?name=" + na;
+                        } else if (data == "Teacher") {
+                            window.location.href = "/Home/TeacherIndex?name=" + na;
+                        }
+                        else if (data == "Admin") {
+                            window.location.href = "/Home/AdminIndex?name=" + na;
+                        }
+                        else {
+                            $("#tip3").html("密码错误请重试！");
+                        }
+                    },
+                    complete: function (data) {
+                        document.getElementById("submit").innerText = "登陆"
+                    }
+                })
+            })
+        });
+
+    </script>
+</head>
+<body>
+    <div style="margin:0 auto; text-align:center ;width:500px; height:500px">
+        <br /> <br /><br /><br /><br />
+
+        <table>
+            <tr>
+                <th></th>
+                <th>登陆</th>
+                <th></th>
+            </tr>
+            <tr>
+                <th>请输入用户名</th>
+                <th><input type="text" id="username" name="username" /> </th>
+                <th><div id="tip1" style="color:red"></div></th>
+            </tr>
+            <tr>
+                <th>请输入密码</th>
+                <th><input type="password" id="password" name="password" /></th>
+                <th><div id="tip2" style="color:red"></div></th>
+            </tr>
+            <tr>
+                <th></th>
+                <th><input type="button" id="submit" name="submit" value="登陆" /></th>
+                <th><div id="tip3" style="color:red"></div></th>
+            </tr>
+        </table>
+    </div>
+</body>
+</html>

@@ -1,0 +1,32 @@
+﻿@model List<jxgl.ViewModel.TCViewModel>
+@{
+    ViewBag.Title = "TCView";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>TCView</h2>
+
+<table>
+    <tr>
+        <th>课程号</th>
+        <th>课程名</th>
+        <th>上课时间</th>
+        <th>上课地点</th>
+        <th>开始结束周</th>
+        <th></th>
+
+    </tr>
+    @foreach (jxgl.ViewModel.TCViewModel X in Model)
+    {<tr>
+        <th>@X.Cno</th>
+        <th>@X.Cname</th>
+        <th>@X.Day-@X.Time</th>
+        <th>@X.Location-@X.RoomNum</th>
+        <th>@X.StarTime~@X.EndTime</th>
+        <th>
+            @Html.ActionLink("详情",)||
+            @Html.ActionLink("录入成绩",)
+        </th>
+    </tr>
+    }
+</table>

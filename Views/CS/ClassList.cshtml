@@ -1,0 +1,37 @@
+﻿@model jxgl.ViewModel.CSListViewModel
+@using jxgl.ViewModel
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>已选课程信息如下：</h2>
+
+<div>
+<table class="table">
+    <tr>
+        <th>课程号</th>
+        <th>课程名</th>
+        <th>教师号</th>
+        <th>教师名</th>
+        <th>学分</th>
+        <th>学时</th>
+        <th>学期</th>
+        <th>分数</th>
+    </tr>
+        @foreach(CSViewModel C in Model.CSs)
+        {
+    <tr>
+        <th>@C.Cno</th>
+        <th>@C.Cname</th>
+        <th>@C.Tno</th>
+        <th>@C.Tname</th>
+        <th>@C.Ccredit</th>
+        <th>@C.Ctime</th>
+        <th>@C.Ctrem</th>
+        <th>@C.Score</th>
+    </tr>
+        }
+</table>
+</div>
+
